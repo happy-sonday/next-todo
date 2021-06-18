@@ -14,6 +14,9 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {
+    "linebreak-style": 0, // 세미콜론 라인브레이크 에러 방지
+    "no-use-before-define": "off", // 타입스크립트 리액트 프로젝트에 import 에러 방지
+    "@typescript-eslint/no-use-before-define": ["error"],
     quotes: ["error", "double"], // 더블 쿼터 사용
     "no-unused-vars": "off", // 사용안한 변수 경고 중복
     "jsx-a11y/control-has-associated-label": "off", // 상호작용하는 엘리먼트에 label을 넣는다
@@ -35,7 +38,7 @@ module.exports = {
     "react/jsx-curly-newline": "off", // 새 라인에 {} 사용 가능하다.
     "react/jsx-filename-extension": [
       1,
-      { extensions: [".js", ".jsx"] }, // jsx사용가능한 확장자 설정
+      { extensions: [".js", ".jsx", "ts", ".tsx"] }, // jsx사용가능한 확장자 설정
     ],
     "import/extensions": [
       "error",
