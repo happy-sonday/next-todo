@@ -8,7 +8,7 @@ const Container = styled.div`
 const ToDoList: React.FC = () => {
   return (
     <Container>
-      <h1>TOdoList</h1>
+      <h1>TodoList</h1>
     </Container>
   );
 };
