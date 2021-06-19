@@ -13,7 +13,8 @@ const todos: TodoType[] = [
   { id: 1, text: "마트 가서 장보기", color: "red", checked: false },
   { id: 2, text: "정보처리기사 실기 공부", color: "orange", checked: true },
   { id: 3, text: "리액트 에제 실습", color: "yellow", checked: false },
-  { id: 4, text: "화면 개선 및 서비스 기획", color: "blue", checked: false }
+  { id: 4, text: "화면 개선 및 서비스 기획", color: "blue", checked: false },
+  { id: 5, text: "5k 조깅", color: "blue", checked: true }
 ];
 
 const index: NextPage = () => {
