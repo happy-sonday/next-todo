@@ -14,6 +14,7 @@ module.exports = {
   },
   plugins: ["react", "@typescript-eslint"],
   rules: {
+    "import/prefer-default-export": "off", // export const로 에러 방지
     "linebreak-style": 0, // 세미콜론 라인브레이크 에러 방지
     "no-use-before-define": "off", // 타입스크립트 리액트 프로젝트에 import 에러 방지
     "@typescript-eslint/no-use-before-define": ["error"],
