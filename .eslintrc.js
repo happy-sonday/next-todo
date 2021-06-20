@@ -17,7 +17,7 @@ module.exports = {
     "linebreak-style": 0, // 세미콜론 라인브레이크 에러 방지
     "no-use-before-define": "off", // 타입스크립트 리액트 프로젝트에 import 에러 방지
     "@typescript-eslint/no-use-before-define": ["error"],
-    "import/prefer-default-export": "off", // export const로 에러 방지
+    "import/prefer-default-export": "off", // export const로 에러 방지,
     quotes: ["error", "double"], // 더블 쿼터 사용
     "no-unused-vars": "off", // 사용안한 변수 경고 중복
     "jsx-a11y/control-has-associated-label": "off", // 상호작용하는 엘리먼트에 label을 넣는다

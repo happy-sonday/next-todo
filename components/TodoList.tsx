@@ -4,6 +4,7 @@ import { TodoType } from "../types/todo";
 import palette from "../styles/pallete";
 import CheckMarkIcon from "../public/statics/iconmonstr-checkbox-1.svg";
 import TrashCanIcon from "../public/statics/iconmonstr-trash-can-14.svg";
+import { checkTodoAPI } from "../lib/api/todo";
 
 type ObjectIndexType = {
   [key: string]: number | undefined;
@@ -140,6 +141,14 @@ const TodoListLastNumber = styled.p`
   }
 `;
 
+const checkTodo = async (id: number) => {
+  try {
+    await checkTodoAPI(id);
+    console.log("체크하였습니다.");
+  } catch (e) {
+    console.log(e);
+  }
+};
 const ToDoList: React.FC<IProps> = ({ todos }) => {
   //* 색깔 객체 구하기 1
   const getTodoColorNums = useCallback(() => {
@@ -230,14 +239,28 @@ const ToDoList: React.FC<IProps> = ({ todos }) => {
               <p className={`todo-text ${todo.checked ? "checked-todo-text" : ""}`}>{todo.text}</p>
             </div>
             {/* NOTE:리스트-오른쪽 */}
+
             <div className="todo-right-side">
-              {!todo.checked && (
+              {todo.checked && (
                 <>
                   <TrashCanIcon className="todo-trash-can" onClick={() => {}} />
-                  <CheckMarkIcon className="todo-check-mark" onClick={() => {}} />
+                  <CheckMarkIcon
+                    className="todo-check-mark"
+                    onClick={() => {
+                      checkTodo(todo.id);
+                    }}
+                  />
                 </>
               )}
-              {!todo.checked && <button type="button" className="todo-button" onClick={() => {}} />}
+              {!todo.checked && (
+                <button
+                  type="button"
+                  className="todo-button"
+                  onClick={() => {
+                    checkTodo(todo.id);
+                  }}
+                />
+              )}
             </div>
           </li>
         ))}

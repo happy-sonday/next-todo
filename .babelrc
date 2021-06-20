@@ -1,14 +1,21 @@
 {
-    "presets": [
-        "next/babel"
+  "presets": ["next/babel"],
+  "plugins": [
+    [
+      "styled-components",
+      {
+        "ssr": true
+      }
     ],
-    "plugins": [
-        [
-            "styled-components",
-            {
-                "ssr": true
-            }
-        ],
-        "inline-react-svg"
+    "inline-react-svg",
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "~/*": "./src",
+          "~/*": "./lib"
+        }
+      }
     ]
+  ]
 }
