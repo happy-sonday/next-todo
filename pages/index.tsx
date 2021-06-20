@@ -7,6 +7,10 @@ import GlobalStyle from "../styles/GlobalStyle";
 import { TodoType } from "../types/todo";
 import { getTodosAPI } from "../lib/api/todo";
 
+interface IProps {
+  todos: TodoType[];
+}
+
 const Container = styled.div`
   padding: 20px;
 `;
@@ -18,19 +22,21 @@ const todos: TodoType[] = [
   { id: 4, text: "화면 개선 및 서비스 기획", color: "blue", checked: false }
 ];
 
-const app: NextPage = () => {
+const app: NextPage<IProps> = ({ todos }) => {
   // 해당 컴포넌트를 받을 제네릭 타입으로 설정하지않으면 No quick fixes availble Error 발생
   return <TodoList todos={todos} />;
 };
 
 export const getServerSideProps: GetServerSideProps = async () => {
   try {
+    console.log(process.env, "서버");
+
     const { data } = await getTodosAPI();
     console.log(data);
-    return { props: {} };
+    return { props: { todos: data } };
   } catch (e) {
     console.log(e);
-    return { props: {} };
+    return { props: { todos: [] } };
   }
 };
 
