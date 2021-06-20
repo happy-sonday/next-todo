@@ -1,9 +1,11 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/dist/client/router";
 import { TodoType } from "../types/todo";
 import palette from "../styles/pallete";
 import CheckMarkIcon from "../public/statics/iconmonstr-checkbox-1.svg";
 import TrashCanIcon from "../public/statics/iconmonstr-trash-can-14.svg";
+import { checkTodoAPI } from "../lib/api/todo";
 
 type ObjectIndexType = {
   [key: string]: number | undefined;
@@ -141,6 +143,26 @@ const TodoListLastNumber = styled.p`
 `;
 
 const ToDoList: React.FC<IProps> = ({ todos }) => {
+  const [localTodos, setLocalTodos] = useState(todos);
+
+  //* 투두 체크하기
+  const checkTodo = async (id: number) => {
+    try {
+      await checkTodoAPI(id);
+      //* 체크를 적용하는 방법 3(data를 local로 저장하여 사용하기)
+      const newTodos = localTodos.map((todo) => {
+        if (todo.id === id) {
+          return { ...todo, checked: !todo.checked };
+        }
+        return todo;
+      });
+      setLocalTodos(newTodos);
+      console.log("체크하였습니다.");
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   //* 색깔 객체 구하기 1
   const getTodoColorNums = useCallback(() => {
     let red = 0;
@@ -149,7 +171,8 @@ const ToDoList: React.FC<IProps> = ({ todos }) => {
     let green = 0;
     let blue = 0;
     let navy = 0;
-    todos.forEach((todo) => {
+    localTodos.forEach((todo) => {
+      // todos.forEach((todo) => {
       switch (todo.color) {
         case "red":
           red += 1;
@@ -209,7 +232,8 @@ const ToDoList: React.FC<IProps> = ({ todos }) => {
     <Container>
       <div className="todo-list-header">
         <p className="todo-list-last-todo">
-          남은TODO<span>{todos.length}개</span>
+          {/* 남은TODO<span>{todos.length}개</span> */}
+          남은TODO<span>{localTodos.length}개</span>
         </p>
         <div className="todo-list-header-colors">
           {Object.keys(todoColorNums).map((color, index) => (
@@ -222,7 +246,8 @@ const ToDoList: React.FC<IProps> = ({ todos }) => {
       </div>
 
       <ul className="todo-list">
-        {todos.map((todo) => (
+        {/* {todos.map((todo) => ( */}
+        {localTodos.map((todo) => (
           <li className="todo-item" key={todo.id}>
             {/* NOTE:리스트-왼쪽 */}
             <div className="todo-left-side">
@@ -234,10 +259,23 @@ const ToDoList: React.FC<IProps> = ({ todos }) => {
               {!todo.checked && (
                 <>
                   <TrashCanIcon className="todo-trash-can" onClick={() => {}} />
-                  <CheckMarkIcon className="todo-check-mark" onClick={() => {}} />
+                  <CheckMarkIcon
+                    className="todo-check-mark"
+                    onClick={() => {
+                      checkTodo(todo.id);
+                    }}
+                  />
                 </>
               )}
-              {!todo.checked && <button type="button" className="todo-button" onClick={() => {}} />}
+              {todo.checked && (
+                <button
+                  type="button"
+                  className="todo-button"
+                  onClick={() => {
+                    checkTodo(todo.id);
+                  }}
+                />
+              )}
             </div>
           </li>
         ))}
