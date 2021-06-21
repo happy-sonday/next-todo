@@ -5,7 +5,7 @@ import { TodoType } from "../types/todo";
 import palette from "../styles/pallete";
 import CheckMarkIcon from "../public/statics/iconmonstr-checkbox-1.svg";
 import TrashCanIcon from "../public/statics/iconmonstr-trash-can-14.svg";
-import { checkTodoAPI } from "../lib/api/todo";
+import { checkTodoAPI, deleteTodoAPI } from "../lib/api/todo";
 
 type ObjectIndexType = {
   [key: string]: number | undefined;
@@ -228,6 +228,17 @@ const ToDoList: React.FC<IProps> = ({ todos }) => {
     return colors;
   }, [todos]);
 
+  /** 투두 삭제하기 */
+  const deleteTodo = async (id: number) => {
+    try {
+      await deleteTodoAPI(id);
+      const newTodos = todos.filter((todo) => todo.id !== id);
+      setLocalTodos(newTodos);
+      console.log("삭제했습니다.");
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <Container>
       <div className="todo-list-header">
@@ -258,7 +269,12 @@ const ToDoList: React.FC<IProps> = ({ todos }) => {
             <div className="todo-right-side">
               {!todo.checked && (
                 <>
-                  <TrashCanIcon className="todo-trash-can" onClick={() => {}} />
+                  <TrashCanIcon
+                    className="todo-trash-can"
+                    onClick={() => {
+                      deleteTodo(todo.id);
+                    }}
+                  />
                   <CheckMarkIcon
                     className="todo-check-mark"
                     onClick={() => {
