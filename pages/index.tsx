@@ -6,20 +6,21 @@ import TodoList from "../components/TodoList";
 import GlobalStyle from "../styles/GlobalStyle";
 import { TodoType } from "../types/todo";
 import { getTodosAPI } from "../lib/api/todo";
+import { wrapper } from "../store";
 
 interface IProps {
-  todos: TodoType[];
+    todos: TodoType[];
 }
 
 const Container = styled.div`
-  padding: 20px;
+    padding: 20px;
 `;
 
 const todos: TodoType[] = [
   { id: 1, text: "마트 가서 장보기", color: "red", checked: false },
   { id: 2, text: "정보처리기사 실기 공부", color: "orange", checked: true },
   { id: 3, text: "리액트 에제 실습", color: "yellow", checked: false },
-  { id: 4, text: "화면 개선 및 서비스 기획", color: "blue", checked: false }
+  { id: 4, text: "화면 개선 및 서비스 기획", color: "blue", checked: false },
 ];
 
 const app: NextPage<IProps> = ({ todos }) => {
@@ -27,17 +28,8 @@ const app: NextPage<IProps> = ({ todos }) => {
   return <TodoList todos={todos} />;
 };
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  try {
-    console.log(process.env, "서버");
-
-    const { data } = await getTodosAPI();
-    console.log(data);
-    return { props: { todos: data } };
-  } catch (e) {
-    console.log(e);
-    return { props: { todos: [] } };
-  }
-};
+// export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = wrapper
+  .getServerSideProps();
 
 export default app;

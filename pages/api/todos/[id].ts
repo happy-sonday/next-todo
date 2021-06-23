@@ -5,6 +5,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === "PATCH") {
     try {
       console.log(req.query);
+      
       const todoId = Number(req.query.id);
       const todo = Data.todo.exist({ id: todoId });
       if (!todo) {
@@ -47,6 +48,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.statusCode = 500;
       res.send(e);
     }
+
+
   }
   res.statusCode = 405;
   return res.end();
