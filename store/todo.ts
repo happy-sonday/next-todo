@@ -1,31 +1,35 @@
 import { TodoType } from "../types/todo";
 
+/** 액션타입 정의 */
 export const INIT_TODO_LIST = "todo/INIT_TODO_LIST";
 
-export const setTodo = (payload : TodoType[]) => {
-    return { 
+/** 액션 생성자 정의 */
+export const setTodo = (payload: TodoType[]) => {
+  return {
     type: INIT_TODO_LIST,
     payload,
-    };
+  };
 };
 
 export const todoActions = { setTodo };
 
-interface TodoReduxState { 
-    todos: TodoType[];
+interface TodoReduxState {
+  todos: TodoType[];
 }
 
-const initalState : TodoReduxState =  {
-    todos: [],
-}
+/** 초기 상태 */
+const initalState: TodoReduxState = {
+  todos: [],
+};
 
-export default function reducer ( state = initalState, action : any ){
-    switch (action.type) {
-        case INIT_TODO_LIST:{
-            const newState = { ...state, todos: action.payload };
-            return newState;
-        }
-        default:
-            return state;
+/** 리듀서 */
+export default function reducer(state = initalState, action: any) {
+  switch (action.type) {
+    case INIT_TODO_LIST: {
+      const newState = { ...state, todos: action.payload };
+      return newState;
     }
+    default:
+      return state;
+  }
 }
